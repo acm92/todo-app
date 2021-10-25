@@ -18,39 +18,48 @@ class LoginComponent extends Component{
         
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            validCredentials: false,
+            invalidCredentials: false
         }
 
-        this.handleUserName = this.handleUserName.bind(this)
-        this.handlePassword = this.handlePassword.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.loginClicked = this.loginClicked.bind(this)
 
     }
 
-    handleUserName(event) {
+    //Variable in object notation: []
+    //The state values that are going to be changed are defined (name)
+    handleChange(event) {
         this.setState(
             {
-                username: event.target.value
+                [event.target.name]: event.target.value
             }
         )
     }
 
-    handlePassword(event) {
-        this.setState(
-            {
-                password: event.target.value
-            }
-        )
+    loginClicked = () => {
+        if(this.state.username === "angel" && this.state.password === "residentevil5"){
+            this.setState({ validCredentials: true })
+            this.setState({ invalidCredentials: false })
+        } else {
+            this.setState({ invalidCredentials: true })
+            this.setState({ validCredentials: false })
+        }
     }
 
     render() {
         return(
             <div>
-                User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleUserName}></input>
-                Password: <input type="password" name="password" value={this.state.password} onChange={this.handlePassword}></input>
-                <button>Login</button>
+                {this.state.validCredentials && <div>Login Successful</div>}
+                {this.state.invalidCredentials && <div>Invalid UserName/Password</div>}
+                User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                <button onClick={this.loginClicked}>Login</button>
             </div>
         )
     }
 }
+
 
 export default TodoApp
