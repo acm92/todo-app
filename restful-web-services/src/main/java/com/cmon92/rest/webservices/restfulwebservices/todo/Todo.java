@@ -10,10 +10,6 @@ public class Todo {
 	private Date targetDate;
 	private boolean isDone;
 	
-	
-	
-	
-	
 	public Todo(long id, String username, String description, Date targetDate, boolean isDone) {
 		super();
 		this.id = id;
@@ -69,6 +65,38 @@ public class Todo {
 	public void setDone(boolean isDone) {
 		this.isDone = isDone;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Todo other = (Todo) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id != other.id)
+			return false;
+		if (isDone != other.isDone)
+			return false;
+		if (targetDate == null) {
+			if (other.targetDate != null)
+				return false;
+		} else if (!targetDate.equals(other.targetDate))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+	
 	
 	
 
