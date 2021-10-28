@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import TodoDataService from "../../api/todo/TodoDataService"
 import AuthenticationService from "./AuthenticationService"
+import moment from "moment"
 
 class ListToDosComponent extends Component {
 
@@ -14,8 +15,10 @@ class ListToDosComponent extends Component {
         this.handleDeleteItem = this.handleDeleteItem.bind(this)
         this.handleUpdateItem = this.handleUpdateItem.bind(this)
         this.refreshTodos = this.refreshTodos.bind(this)
+        this.addTodo = this.addTodo.bind(this)
     }
 
+    //Life-cycle method. It will retrieve the ToDo's from the back-end
     componentDidMount() {
         this.refreshTodos()
     }
@@ -55,11 +58,21 @@ class ListToDosComponent extends Component {
        // )
     }
 
+    addTodo() {
+
+        //It does not exist, so the id is -1
+        this.props.history.push(`/todos/-1`)
+
+    }
+
     render() {
         return (
             <div>
                 <h1>List Todos</h1>
                 {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
+                <p>
+                    <button className="btn btn-success" onClick={this.addTodo}>Add Todo</button>
+                </p>
                 <div className="container">
                     <table className="table">
                         <thead>
@@ -76,7 +89,7 @@ class ListToDosComponent extends Component {
                                 <tr key={todo.id}>
                                     <td>{todo.description}</td>
                                     <td>{todo.done.toString()}</td>
-                                    <td>{todo.targetDate.toString()}</td>
+                                    <td>{moment(todo.targetDate).format("YYYY-MM-DD")}</td>
                                     <td><button className="btn btn-success" onClick={() => this.handleUpdateItem(todo.id)}>Update item</button></td>
                                     <td><button className="btn btn-warning" onClick={() => this.handleDeleteItem(todo.id)}>Delete item</button></td>
                                 </tr>

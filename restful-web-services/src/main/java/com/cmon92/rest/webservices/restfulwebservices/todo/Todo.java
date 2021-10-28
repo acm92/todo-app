@@ -10,6 +10,11 @@ public class Todo {
 	private Date targetDate;
 	private boolean isDone;
 	
+	//Default constructor for PUT requests
+	protected Todo() {
+		
+	}
+	
 	public Todo(long id, String username, String description, Date targetDate, boolean isDone) {
 		super();
 		this.id = id;

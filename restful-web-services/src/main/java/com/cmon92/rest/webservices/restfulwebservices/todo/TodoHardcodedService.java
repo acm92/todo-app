@@ -18,9 +18,24 @@ public class TodoHardcodedService {
 		todos.add(new Todo(idCounter++, "angel", "Workout", new Date(), false));
 	}
 	
+	//To retrieve all todos
 	public List<Todo> findAll() {
 		return todos;
 	}
+	
+	//To save changes
+	public Todo save(Todo todo) {
+		if(todo.getId() == -1) { //Adding a new Todo
+			todo.setId(++idCounter);
+			todos.add(todo);
+		} else {	//Updating a new Todo
+			deleteById(todo.getId());
+			todos.add(todo);
+		}
+		return todo;
+	}
+	
+	
 	
 	public Todo deleteById(long id) {
 		
@@ -32,8 +47,10 @@ public class TodoHardcodedService {
 		
 		return todo;
 	}
+	
+	
 
-	private Todo findById(long id) {
+	public Todo findById(long id) {
 		for(Todo todo : todos) {
 			if(todo.getId() == id) {
 				return todo;
