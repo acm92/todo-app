@@ -1,4 +1,6 @@
 import axios from "axios"
+import {API_URL, JPA_API_URL} from "../../Constants"
+
 
 class AuthenticationService {
 
@@ -9,7 +11,7 @@ class AuthenticationService {
 
     //User Validation API to connect to the BackEnd
     executeJwtAuthenticationService(username, password) {
-        return axios.post("http://localhost:8080/authenticate", {
+        return axios.post(`${API_URL}/authenticate`, {
             username,
             password
         })
