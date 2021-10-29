@@ -1,4 +1,4 @@
-package com.cmon92.rest.webservices.restfulwebservices.basic.auth;
+package com.cmon92.basic.auth;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

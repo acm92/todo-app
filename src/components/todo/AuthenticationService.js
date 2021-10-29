@@ -2,9 +2,35 @@ import axios from "axios"
 
 class AuthenticationService {
 
+    //User Validation API to connect to the BackEnd
+    //executeBasicAuthenticationService(username, password) {
+   //     return axios.get("http://localhost:8080/basicauth", {headers: {authorization: this.createBasicAuthToken(username, password)}})
+   // }
+
+    //User Validation API to connect to the BackEnd
+    executeJwtAuthenticationService(username, password) {
+        return axios.post("http://localhost:8080/authenticate", {
+            username,
+            password
+        })
+    }
+
+    successfulLoginForJwt(username, token) {
+        sessionStorage.setItem("authenticatedUser", username)
+        this.setupAxiosInterceptors(this.createJWTToken(token))
+    }
+
+    createBasicAuthToken(username, password) {
+        return 'Basic ' + window.btoa(username + ":" + password)
+    }
+
+    createJWTToken(token) {
+        return 'Bearer ' + token
+    }
+
     successfulLogin(username, password){
         sessionStorage.setItem("authenticatedUser", username)
-        this.setupAxiosInterceptors()
+        this.setupAxiosInterceptors(this.createBasicAuthToken(username, password))
     }
 
     logout() {
@@ -24,7 +50,7 @@ class AuthenticationService {
 
     }
 
-    setupAxiosInterceptors() {
+    setupAxiosInterceptors(basicAuthHeader) {
         //{ Authorization: basicAuthHeaderString}
 
         axios.interceptors.request.use(

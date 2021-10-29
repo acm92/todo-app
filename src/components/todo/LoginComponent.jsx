@@ -30,15 +30,35 @@ class LoginComponent extends Component {
     }
 
     loginClicked = () => {
-        if (this.state.username === "angel" && this.state.password === "residentevil5") {
 
-            AuthenticationService.successfulLogin(this.state.username, this.state.password)
-            this.props.history.push(`/welcome/${this.state.username}`)
+        //No need for username and password, we need the token of JWT
+        AuthenticationService.executeJwtAuthenticationService(this.state.username, this.state.password).then(
+            (response) => {
+                AuthenticationService.successfulLoginForJwt(this.state.username, response.data.token)
+                this.props.history.push(`/welcome/${this.state.username}`)
+            }
 
-        } else {
-            this.setState({ invalidCredentials: true })
-            this.setState({ validCredentials: false })
-        }
+        ).catch(
+            () => {
+                this.setState({ invalidCredentials: true })
+                this.setState({ validCredentials: false })
+            }
+
+        )
+
+        //AuthenticationService.executeBasicAuthenticationService(this.state.username, this.state.password).then(
+        //    () => {
+        //        AuthenticationService.successfulLogin(this.state.username, this.state.password)
+        //        this.props.history.push(`/welcome/${this.state.username}`)
+        //    }
+
+        //).catch(
+        //    () => {
+        //        this.setState({ invalidCredentials: true })
+        //        this.setState({ validCredentials: false })
+        //    }
+
+        //)
     }
 
     render() {
